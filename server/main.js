@@ -7,17 +7,7 @@ Meteor.startup(() => {
 });
 
 Meteor.publish("all", function () {
-  Widgets.find({a: {$exists: 1}}).observe({
-    added: function () {
-      Gadgets.findOne({b: {$lt: Math.random() * 100}});
-      console.log(Fiber.fibersCreated);
-    },
-    changed: function () {
-      Gadgets.findOne({b: {$lt: Math.random() * 100}});
-      console.log(Fiber.fibersCreated);
-    }
-  });
-  return Widgets.find();
+  return Widgets.find({a: {$lt: 1}});
 });
 
 Meteor.startup(function () {
@@ -30,9 +20,13 @@ Meteor.startup(function () {
 
 Meteor.methods({
   set: function () {
-    Widgets.update({}, {$set: {a: 5}}, {multi:true})
+    Widgets.update({}, {$set: {a: Math.random()}}, {multi:true});
+    console.log('set complete');
   },
   unset: function () {
-    Widgets.update({}, {$unset: {a: 1}}, {multi:true})
+    Widgets.update({}, {$unset: {a: 1}}, {multi:true});
+    console.log('unset complete');
   },
 });
+
+Meteor.setInterval(function () { console.log(Fiber.fibersCreated);}, 5000);
