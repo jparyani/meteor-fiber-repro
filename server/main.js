@@ -1,11 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 Fiber = Npm.require("fibers");
 
-
-Meteor.startup(() => {
-  // code to run on server at startup
-});
-
 Meteor.publish("all", function () {
   return Widgets.find({a: {$lt: 1}});
 });
@@ -30,3 +25,4 @@ Meteor.methods({
 });
 
 Meteor.setInterval(function () { console.log(Fiber.fibersCreated);}, 5000);
+Fiber.poolSize = 1e9;
