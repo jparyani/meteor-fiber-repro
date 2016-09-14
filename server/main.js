@@ -30,3 +30,8 @@ Meteor.methods({
 });
 
 Meteor.setInterval(function () { console.log(Fiber.fibersCreated);}, 5000);
+
+unsetAndSet = function() {
+  Widgets.update({}, {$unset: {a: 1}}, {multi:true});
+  Widgets.update({}, {$set: {a: Math.random()}}, {multi:true});
+};
